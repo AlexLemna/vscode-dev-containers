@@ -33,7 +33,6 @@ RUN rm -rf /tmp/library-scripts
 # Add rsyslog
 RUN apt-get update && export DEBIAN_FRONTEND=noninteractive \
     && apt-get -y install --no-install-recommends rsyslog
-RUN service rsyslog start
 
 # Add SSH
 RUN apt-get update && export DEBIAN_FRONTEND=noninteractive \
@@ -50,8 +49,12 @@ COPY authorized_keys /home/${USERNAME}/.ssh
 # Also - the user can't log in unless their SSH session can read their keys. So, chown.
 RUN chown ${USERNAME}:${USERNAME} /home/${USERNAME}/.ssh/authorized_keys
 EXPOSE 22
-RUN /usr/sbin/sshd
 
+# Add supervisor
+RUN apt-get update && export DEBIAN_FRONTEND=noninteractive \
+    && apt-get -y install --no-install-recommends supervisor
+COPY ./supervisord.conf /etc/supervisord.conf
+CMD ["/usr/bin/supervisord"]
 # [Optional] If your pip requirements rarely change, uncomment this section to add them to the image.
 # COPY requirements.txt /tmp/pip-tmp/
 # RUN pip3 --disable-pip-version-check --no-cache-dir install -r /tmp/pip-tmp/requirements.txt \
