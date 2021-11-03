@@ -34,6 +34,10 @@ RUN rm -rf /tmp/library-scripts
 RUN apt-get update && export DEBIAN_FRONTEND=noninteractive \
     && apt-get -y install --no-install-recommends openssh-server
 RUN mkdir /home/${USERNAME}/.ssh
+# To fix error "Missing privilege separation-directory: /run/sshd"
+# https://askubuntu.com/questions/1110828/ssh-failed-to-start-missing-privilege-separation-directory-var-run-sshd
+RUN mkdir /var/run/sshd
+RUN chmod 755 /var/run/sshd
 # If you specify authorized keys to load into a cloud instance upon creation, they're probably put into
 # /root/.ssh/authorized_keys. YMMV depending on which cloud provider you use. Regardless - you'll have 
 # to copy the authorized_keys file into the context specified in your docker-compose file.
