@@ -30,6 +30,11 @@ RUN bash /tmp/library-scripts/python-debian.sh "none" "/usr/local" "${PIPX_HOME}
 # Remove library scripts for final image
 RUN rm -rf /tmp/library-scripts
 
+# Add rsyslog
+RUN apt-get update && export DEBIAN_FRONTEND=noninteractive \
+    && apt-get -y install --no-install-recommends rsyslog
+RUN service rsyslog start
+
 # Add SSH
 RUN apt-get update && export DEBIAN_FRONTEND=noninteractive \
     && apt-get -y install --no-install-recommends openssh-server
