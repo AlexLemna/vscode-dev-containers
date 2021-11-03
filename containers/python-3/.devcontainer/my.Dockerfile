@@ -35,8 +35,9 @@ RUN apt-get update && export DEBIAN_FRONTEND=noninteractive \
     && apt-get -y install --no-install-recommends openssh-server
 RUN mkdir /home/${USERNAME}/.ssh
 # If you specify authorized keys to load into a cloud instance upon creation, they're probably put into
-# /root/.ssh/authorized_keys. YMMV depending on which cloud provider you use.
-COPY /root/.ssh/authorized_keys /home/${USERNAME}/.ssh
+# /root/.ssh/authorized_keys. YMMV depending on which cloud provider you use. Regardless - you'll have 
+# to copy the authorized_keys file into the context specified in your docker-compose file.
+COPY authorized_keys /home/${USERNAME}/.ssh
 EXPOSE 22
 RUN /usr/sbin/sshd
 
