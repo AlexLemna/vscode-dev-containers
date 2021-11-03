@@ -42,6 +42,8 @@ RUN chmod 755 /var/run/sshd
 # /root/.ssh/authorized_keys. YMMV depending on which cloud provider you use. Regardless - you'll have 
 # to copy the authorized_keys file into the context specified in your docker-compose file.
 COPY authorized_keys /home/${USERNAME}/.ssh
+# Also - the user can't log in unless their SSH session can read their keys. So, chown.
+RUN chown ${USERNAME}:${USERNAME} /home/${USERNAME}/.ssh/authorized_keys
 EXPOSE 22
 RUN /usr/sbin/sshd
 
