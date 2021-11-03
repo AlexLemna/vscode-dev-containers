@@ -30,6 +30,16 @@ RUN bash /tmp/library-scripts/python-debian.sh "none" "/usr/local" "${PIPX_HOME}
 # Remove library scripts for final image
 RUN rm -rf /tmp/library-scripts
 
+# Add SSH
+RUN apt-get update && export DEBIAN_FRONTEND=noninteractive \
+    && apt-get -y install --no-install-recommends openssh-server
+RUN mkdir /home/${USERNAME}/.ssh
+# If you specify authorized keys to load into a cloud instance upon creation, they're probably put into
+# /root/.ssh/authorized_keys. YMMV depending on which cloud provider you use.
+COPY /root/.ssh/authorized_keys /home/${USERNAME}/.ssh
+EXPOSE 22
+RUN /usr/sbin/sshd
+
 # [Optional] If your pip requirements rarely change, uncomment this section to add them to the image.
 # COPY requirements.txt /tmp/pip-tmp/
 # RUN pip3 --disable-pip-version-check --no-cache-dir install -r /tmp/pip-tmp/requirements.txt \
