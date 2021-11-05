@@ -198,9 +198,9 @@ else
         groupadd --gid $USER_GID $USERNAME
     fi
     if [ "${USER_UID}" = "automatic" ]; then 
-        useradd -s /bin/bash --gid $USERNAME -m $USERNAME
+        useradd -s /usr/bin/zsh --gid $USERNAME -m $USERNAME
     else
-        useradd -s /bin/bash --uid $USER_UID --gid $USERNAME -m $USERNAME
+        useradd -s /usr/bin/zsh --uid $USER_UID --gid $USERNAME -m $USERNAME
     fi
 fi
 
