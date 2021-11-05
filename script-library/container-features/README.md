@@ -1,1 +1,0 @@
-This folder includes some explorations around dynamic container feature injection. Nothing stable yet.
