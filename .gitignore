@@ -1,3 +1,15 @@
+## ---- My .gitignore ----
+*
+!.editorconfig
+!.gitignore
+!.gitattributes
+!LICENSE
+!NOTICE.txt
+!CONTRIBUTING.md
+!README.md
+
+
+## ---- Upstream .gitignore ----
 **/target
 **/.build
 *.DS_Store
